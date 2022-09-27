@@ -24,6 +24,7 @@ jobs:
                 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
                 sudo yum install -y nodejs
                 sudo yum install -y git
+                rm -rf lotr
                 git clone https://github.com/sam-meech-ward-bcit/lotr
                 cd lotr/
                 npm i
