@@ -20,10 +20,10 @@ jobs:
             key:  ${{ secrets.EC2_SSH_KEY }}
             port:  ${{ secrets.PORT }}
             script: |
-                yum install -y gcc-c++ make
+                sudo  yum install -y gcc-c++ make
                 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
-                yum install -y nodejs
-                yum install -y git
+                sudo yum install -y nodejs
+                sudo yum install -y git
                 git clone https://github.com/sam-meech-ward-bcit/lotr
                 cd lotr/
                 npm i
