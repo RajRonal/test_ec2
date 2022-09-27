@@ -1,0 +1,34 @@
+name: Push-to-EC2
+
+# Trigger deployment only on push to master branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+        script: |
+           sudo yum install -y gcc-c++ make |
+           curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash - |
+           sudo yum install -y nodejs |
+           sudo yum install -y git |
+           git clone https://github.com/sam-meech-ward-bcit/lotr |
+           cd lotr/ |
+           npm i   |
+           node server.js |
+        
