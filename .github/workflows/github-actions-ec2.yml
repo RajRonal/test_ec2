@@ -12,14 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
-        uses: actions/checkout@v2
-
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
+       - name: Install SSH key
+         uses: shimataro/ssh-key-action@v2
+         with:
+           key: ${{ secrets.EC2_SSH_KEY }}
+           name: id_rsa
+           known_hosts: ${{ secrets.HOST_DNS }}
+       - name: ssh
+         run: ssh ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}
      
